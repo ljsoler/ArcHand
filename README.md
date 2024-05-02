@@ -12,21 +12,21 @@
 1. Download the training and test set of [HaGrid database](https://github.com/hukenovs/hagrid) and crop the hand images similar to the ones in the example.
 2. Organise the folder in the following format:
 
----- HaGrid
-------train
---------SubjectID-1
------------ call
---------------- right
---------------------- images1.jpg
---------------------- images2.jpg
---------------------- ...
---------------- left
---------------------- images1.jpg
---------------------- ...
------------ dislike
------------ ...
-------test
------------ ...
+.
+├── train                           # Training set folder
+│   ├── SubjectID-1                 # Subject ID
+│       ├── call                    # Gestures
+│           ├── right               # right hand 
+│               ├── images1.jpg     # images
+│               ├── images1.jpg             
+│               └── ...             # etc.
+│           ├── left                # left hand
+│               └── ...             # images
+│           ├── ...                 # More gestures
+│   ├── SubjectID-2                 # More subjects
+│       └── ...                     # etc.
+├── test                            # Test set folder
+│   └── ...                         # etc.       
 
 2. run: bash run_training.sh hagrid-folder-path model-output-folder
 
