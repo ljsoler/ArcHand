@@ -11,8 +11,11 @@
 ## ArcHand training ##
 1. Download the training and test set of [HaGrid database](https://github.com/hukenovs/hagrid) and crop the hand images similar to the ones in the example.
 2. Organise the folder in the following format:
+
 ---- HaGrid
+
 ------train
+
 --------SubjectID-1
 ----------- call
 --------------- right
