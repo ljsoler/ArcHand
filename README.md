@@ -13,9 +13,7 @@
 2. Organise the folder in the following format:
 
 ---- HaGrid
-
 ------train
-
 --------SubjectID-1
 ----------- call
 --------------- right
