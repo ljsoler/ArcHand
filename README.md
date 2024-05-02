@@ -12,6 +12,7 @@
 1. Download the training and test set of [HaGrid database](https://github.com/hukenovs/hagrid) and crop the hand images similar to the ones in the example.
 2. Organise the folder in the following format:
 
+```
     .
     ├── train                           # Training set folder
     │   ├── SubjectID-1                 # Subject ID
@@ -26,16 +27,10 @@
     │   ├── SubjectID-2                 # More subjects
     │       └── ...                     # etc.
     ├── test                            # Test set folder
-    │   └── ...                         # etc.       
+    │   └── ...                         # etc.     
 
-    ├── ...
-    ├── docs                    # Documentation files (alternatively `doc`)
-    │   ├── TOC.md              # Table of contents
-    │   ├── faq.md              # Frequently asked questions
-    │   ├── misc.md             # Miscellaneous information
-    │   ├── usage.md            # Getting started guide
-    │   └── ...                 # etc.
-    └── ...
+```  
+
 2. run: bash run_training.sh hagrid-folder-path model-output-folder
 
 <hr/>
