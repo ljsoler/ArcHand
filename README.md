@@ -23,7 +23,7 @@
     │               └── ...             # etc.
     │           ├── left                # left hand
     │               └── ...             # images
-    │           ├── ...                 # More gestures
+    │       ├── ...                     # More gestures
     │   ├── SubjectID-2                 # More subjects
     │       └── ...                     # etc.
     ├── test                            # Test set folder
@@ -42,11 +42,13 @@
 
 openvino_infer.ipynb contains a example of algorithm usability using OpenVino inference optimisation. 
 
+- Download the pre-trained model to ./models
+
 <hr/>
 
 ## Pre-trained Models ##
 
-Pre-trained model of EfficientNet for the right hand can be found in ./models 
+Pre-trained model of EfficientNet for the right hand can be found in [Google Drive](https://drive.google.com/drive/folders/1UmDwb3z26rStKUvmFQQbIt91W60r1rhK?usp=sharing)
 
 <hr/>
 
