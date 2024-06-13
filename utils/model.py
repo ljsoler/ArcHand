@@ -35,37 +35,19 @@ class TrainManager(pl.LightningModule):
         self.header = ArcFace(in_features=num_features, out_features=num_identities, s= s, m= m)
         self.criterion = CrossEntropyLoss()
         # Important: This property activates manual optimization.
-        self.automatic_optimization = False
 
     def forward(self, x):
         return self.backbone(x)
 
     def training_step(self, batch, batch_idx):
         x, target = batch
-        opt_backbone, opt_header = self.optimizers()
-        scheduler_backbone, scheduler_header = self.lr_schedulers()
 
         features = self.backbone(x)
         thetas = self.header(F.normalize(features), target)
         loss = self.criterion(thetas, target)
 
-        #header and backbone optimisation
-        opt_backbone.zero_grad()
-        opt_header.zero_grad()
-        self.manual_backward(loss)
-
         clip_grad_norm_(self.backbone.parameters(), max_norm=5, norm_type=2)
-        self.clip_gradients(opt_backbone, gradient_clip_val=0.5, gradient_clip_algorithm="norm")
 
-        opt_backbone.step()
-        opt_header.step()
-
-        # step every N epochs
-        if self.trainer.is_last_batch and (self.trainer.current_epoch + 1) % 8 == 0:
-            scheduler_backbone.step()
-            scheduler_header.step()
-
-        # bot, combined
         self.log_dict({"train_loss": loss}, prog_bar=True)
         return loss
 
@@ -73,28 +55,11 @@ class TrainManager(pl.LightningModule):
         pass
 
     def configure_optimizers(self):
-        opt_backbone = torch.optim.Adam(self.backbone.parameters(), lr=1e-4)
-        opt_header = torch.optim.Adam(self.header.parameters(), lr=1e-4)
-
-        scheduler_backbone = torch.optim.lr_scheduler.ExponentialLR(optimizer=opt_backbone, gamma = 0.95)
-        scheduler_header = torch.optim.lr_scheduler.ExponentialLR(optimizer=opt_header, gamma = 0.95)
-
-        return (
-        {
-            "optimizer": opt_backbone,
-            "lr_scheduler": {
-                "scheduler": scheduler_backbone,
-                "interval": "epoch",
-                "frequency": 1
-            },
-        },
-        {
-            "optimizer": opt_header, 
-            "lr_scheduler": scheduler_header,
-            "interval": "epoch",
-            "frequency": 1
-         }
-    )
+        params = list(self.backbone.parameters())
+        params += list(self.header.parameters())
+        opt_backbone = torch.optim.Adam(params, lr=1e-4)
+        # opt_header = torch.optim.Adam(self.header.parameters(), lr=1e-4)
+        return opt_backbone
 
 
     def test_step(self, batch, batch_idx):
